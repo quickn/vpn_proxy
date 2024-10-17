@@ -16,7 +16,7 @@
 
 ssl_options* init_ctx(ssl_options *ssl, options_main* opt){
     printf("init ssl\n");
-    SSL_METHOD *method;
+    //SSL_METHOD *method;
 
     SSL_library_init();
  
@@ -24,12 +24,13 @@ ssl_options* init_ctx(ssl_options *ssl, options_main* opt){
     SSL_load_error_strings();
 
     if ( opt->MODE == 1 ){
-        method = (SSL_METHOD*)TLSv1_2_server_method(); 
+       // method = (SSL_METHOD*)TLSv1_2_server_method(); 
+        //SSL_CTX *ctx = SSL_CTX_new(TLS_server_method());
+        ssl->ctx = SSL_CTX_new(TLS_server_method());
     }else if ( opt->MODE == 0 ){
-        method = (SSL_METHOD*)TLSv1_2_client_method(); 
+        //method = (SSL_METHOD*)TLSv1_2_client_method(); 
+        ssl->ctx = SSL_CTX_new(TLS_client_method());
     }
-
-    ssl->ctx = SSL_CTX_new(method);
 
     if ( ssl->ctx == NULL ){
         vpn_error_exit("ctx1\n", 1);

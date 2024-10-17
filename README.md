@@ -27,6 +27,12 @@ docker pull remijouannet/docker-tinyproxy
 
 ```
 ./docker.sh run_c2
+
+sudo apt install openssl
+sudo apt install libssl-dev
+openssl version
+
+
 ```
 
 

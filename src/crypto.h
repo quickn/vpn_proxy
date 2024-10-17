@@ -2,8 +2,8 @@ struct crypto_options
 {
     uint8_t key[32];
     uint8_t salt[32];
-    EVP_CIPHER_CTX en;
-    EVP_CIPHER_CTX de;
+    EVP_CIPHER_CTX *en;
+    EVP_CIPHER_CTX *de;
 };
 typedef struct crypto_options crypto_options;
 

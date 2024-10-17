@@ -19,8 +19,8 @@
 int test1() {
     crypto_options crypto_ = {{0}};
 
-    memcpy(crypto_.key, "aeeazfafqdfeeeeeeaeaeaeaeae", 32);
-    memcpy(crypto_.salt, "aeeazfafqdfeeeeee", 32);
+    memcpy(crypto_.key, "01234567890123456789012345678901", 32);
+    memcpy(crypto_.salt, "01234567890123456789012345678901", 32);
     init_crypto(&crypto_);
     
     intmax_t len;
@@ -31,11 +31,11 @@ int test1() {
     len = 16;
     printf("%ju \n", len); 
     print_hex(input, len);
-    ciphertext = aes_encrypt(&(crypto_.en), input, &len);
+    ciphertext = aes_encrypt(crypto_.en, input, &len);
 
     printf("%ju \n", len); 
     print_hex(ciphertext, len);
-    plaintext = aes_decrypt(&(crypto_.de), ciphertext, &len);
+    plaintext = aes_decrypt(crypto_.de, ciphertext, &len);
 
     printf("%ju \n", len); 
     print_hex(plaintext, len);

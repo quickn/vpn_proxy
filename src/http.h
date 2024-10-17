@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 int add_http_header(options_main* opt, uint8_t *data, intmax_t *len);
 int remove_http_header(options_main* opt, uint8_t *data, intmax_t *len);
 

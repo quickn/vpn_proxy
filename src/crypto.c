@@ -71,16 +71,15 @@ intmax_t init_crypto(crypto_options *crypto_){
 
     key_data_len = strlen((const char *)crypto_->key);
   
-    if (aes_init(crypto_->key, key_data_len, 
-                crypto_->salt, &(crypto_->en), &(crypto_->de))){
+    if (aes_init(crypto_->key, key_data_len, crypto_->salt, crypto_->en, crypto_->de)){
         printf("Couldn't initialize AES cipher\n");
         return -1;
     }
 
     olen = len = strlen((const char *)input)+1;
     
-    ciphertext = aes_encrypt(&(crypto_->en), input, &len);
-    plaintext = aes_decrypt(&(crypto_->de), ciphertext, &len);
+    ciphertext = aes_encrypt(crypto_->en, input, &len);
+    plaintext = aes_decrypt(crypto_->de, ciphertext, &len);
 
     if (memcmp(plaintext, input, olen)){ 
         printf("FAIL: enc/dec failed for \"%s\"\n", input);
@@ -97,7 +96,7 @@ intmax_t init_crypto(crypto_options *crypto_){
 }
  
 intmax_t end_crypto(crypto_options *crypto_){
-    EVP_CIPHER_CTX_cleanup(&(crypto_->en));
-    EVP_CIPHER_CTX_cleanup(&(crypto_->de));
+    EVP_CIPHER_CTX_cleanup(crypto_->en);
+    EVP_CIPHER_CTX_cleanup(crypto_->de);
     return 0;
 }

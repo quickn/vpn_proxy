@@ -125,8 +125,8 @@ int while_interface(options_main* opt, int sockfd){
 	fd_set fdset;
     crypto_options crypto_ = {{0}};
 
-    memcpy(crypto_.key, "aeeazfafqdfeeeeeeaeaeaeaeae", 32);
-    memcpy(crypto_.salt, "aeeazfafqdfeeeeee", 32);
+    memcpy(crypto_.key, "01234567890123456789012345678901", 32);
+    memcpy(crypto_.salt, "01234567890123456789012345678901", 32);
     init_crypto(&crypto_);
     
     sleep(3);
@@ -199,7 +199,7 @@ int while_interface(options_main* opt, int sockfd){
 int send_tunnel(uint8_t *data, crypto_options *crypto_, intmax_t *len){
     uint8_t *ciphertext;
     
-    ciphertext = aes_encrypt(&(crypto_->en), data, len);
+    ciphertext = aes_encrypt(crypto_->en, data, len);
     memcpy(data, ciphertext, *len);
     free(ciphertext);
 
@@ -209,7 +209,7 @@ int send_tunnel(uint8_t *data, crypto_options *crypto_, intmax_t *len){
 int recv_tunnel(uint8_t *data, crypto_options *crypto_, intmax_t *len){
     uint8_t *plaintext;
 
-    plaintext = aes_decrypt(&(crypto_->de), data, len);
+    plaintext = aes_decrypt(crypto_->de, data, len);
     memcpy(data, plaintext, *len);
     free(plaintext);
 
